@@ -44,6 +44,10 @@ Use `task` when a task exists.
 - Typecheck: `task typecheck`
 - Run tests once: `task test:run`
 - Full verification: `task verify`
+- Supabase login: `task db:login`
+- Link hosted project: `task db:link`
+- Apply migrations and seed: `task db:push`
+- Generate DB types: `task db:types`
 - List commands: `task --list`
 
 If `task` is unavailable, activate mise in the current shell, then retry the `task` command. Do not use `mise exec -- task`.
@@ -64,6 +68,29 @@ If `task` is unavailable, activate mise in the current shell, then retry the `ta
 - Public market data may be readable.
 - Profiles, positions, and ledger entries must stay owner-scoped.
 - After changing migrations or seed data, run `task db:push` and `task db:types` once the repo is linked to Supabase.
+
+### Migration Safety
+
+- Create exactly one migration file per schema change.
+- Run `supabase migration new <name>` only once. Do not retry if the CLI hangs, stalls, or errors.
+- Verify the new migration file is non-empty before writing SQL.
+- Do not manually invent another timestamped migration filename.
+- If the CLI fails or produces an empty migration file, stop and report the issue instead of creating a second migration file.
+- Before `task db:push`, confirm there is only one new migration file in `supabase/migrations/`.
+- Do not leave zero-byte `.sql` files in `supabase/migrations/`.
+- After pushing, confirm local and remote migration history match: `supabase migration list --linked`.
+
+### Supabase Verification
+
+Once the repo is linked to a hosted Supabase project:
+
+```bash
+task db:push
+task db:types
+supabase migration list --linked
+```
+
+`task db:push` applies migrations and seed data. `task db:types` writes `src/lib/supabase/database.types.ts`.
 
 ## Validation
 
