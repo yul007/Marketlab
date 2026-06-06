@@ -20,7 +20,9 @@ Do not add dependencies or replace the stack unless asked.
 
 ## Skills and Docs
 
-Use relevant installed skills for framework-specific work.
+Project skills live in `.agents/skills/` and are pinned in `skills-lock.json`. Use them for framework-specific work (Supabase, Next.js App Router, React, Postgres, UI).
+
+To add or update skills: `npx skills add <owner/repo@skill>`. Browse options at [skills.sh](https://skills.sh/).
 
 For Next.js-specific uncertainty, prefer the installed docs in `node_modules/next/dist/docs/`.
 
