@@ -90,7 +90,7 @@ tasks:
     cmds:
       - |
         {{.BUN}} -e "const { mkdirSync } = require('node:fs'); mkdirSync('src/lib/supabase', { recursive: true })"
-      - '{{.SUPABASE}} gen types typescript --project-id "{{.SUPABASE_PROJECT_REF}}" > src/lib/supabase/database.types.ts'
+      - '{{.SUPABASE}} gen types typescript --linked > src/lib/supabase/database.types.ts'
 
   verify:
     desc: Run checks, typecheck, and unit tests.
